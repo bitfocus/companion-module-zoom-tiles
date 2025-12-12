@@ -1,10 +1,9 @@
 import { Regex, type SomeCompanionConfigField } from '@companion-module/base'
 
-export interface ModuleConfig {
+export interface ZoomConfig {
 	host: string
-	port: number
+	rx_port: number
 }
-
 export function GetConfigFields(): SomeCompanionConfigField[] {
 	return [
 		{
@@ -17,11 +16,11 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 		{
 			type: 'number',
 			id: 'port',
-			label: 'Target Port',
+			label: 'Receiving Port',
 			width: 4,
 			min: 1,
 			max: 65535,
-			default: 8000,
+			default: 3456,
 		},
 	]
 }
