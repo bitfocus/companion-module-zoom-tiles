@@ -1,1 +1,6 @@
 lint-staged
+
+#!/bin/sh
+# Husky pre-commit hook to update companion/HELP.md with all action names and descriptions
+node scripts/update-help.js
+git add companion/HELP.md

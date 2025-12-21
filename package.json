@@ -10,7 +10,8 @@
 		"build:main": "tsc -p tsconfig.build.json",
 		"dev": "tsc -p tsconfig.build.json --watch",
 		"lint:raw": "eslint",
-		"lint": "run lint:raw ."
+		"lint": "run lint:raw .",
+		"help:update": "node ./scripts/update-help.js"
 	},
 	"license": "MIT",
 	"repository": {
