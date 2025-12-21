@@ -15,8 +15,8 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 		},
 		{
 			type: 'number',
-			id: 'port',
-			label: 'Receiving Port',
+			id: 'rx_port',
+			label: 'Zoom Tiles Receiving Port',
 			width: 4,
 			min: 1,
 			max: 65535,
