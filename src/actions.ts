@@ -76,7 +76,7 @@ export function UpdateActions(self: ZoomInstance): void {
 				const meetingId = await self.parseVariablesInString(action.options.meetingID as string)
 				const password = await self.parseVariablesInString(action.options.password as string)
 				command.args.push({ type: 's', value: zak })
-				command.args.push({ type: 'i', value: meetingId })
+				command.args.push({ type: 's', value: meetingId })
 				command.args.push({ type: 's', value: name })
 				command.args.push({ type: 's', value: password })
 				const sendToCommand = {
