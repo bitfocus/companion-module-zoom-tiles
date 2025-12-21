@@ -301,5 +301,139 @@ export function UpdateActions(self: ZoomInstance): void {
 				sendActionCommand(self, sendToCommand)
 			},
 		},
+		blockByUserName: {
+			name: 'Block by User Name',
+			description: 'Block user(s) by User Name. For multiple users, separate names with a comma.',
+			options: [
+				{
+					type: 'textinput',
+					label: 'User Name',
+					id: 'userName',
+					default: '',
+					useVariables: true,
+				},
+			],
+			callback: async (action): Promise<void> => {
+				self.log('debug', `Action Block by User Name triggered`)
+				const command = createCommand('/userName/block')
+				const userName = await self.parseVariablesInString(action.options.userName as string)
+				if (userName.indexOf(',') !== -1) {
+					const userNames = userName.split(',')
+					for (const name of userNames) {
+						self.log('debug', `Blocking user: ${name.trim()}`)
+						command.args = [] // Reset args for each user
+						command.args.push({ type: 's', value: name.trim() })
+
+						const sendToCommand = {
+							id: 'blockByUserName',
+							options: {
+								command: command.oscPath,
+								args: command.args,
+							},
+						}
+
+						sendActionCommand(self, sendToCommand)
+					}
+				} else {
+					self.log('debug', `Blocking user: ${userName}`)
+					command.args.push({ type: 's', value: userName })
+
+					const sendToCommand = {
+						id: 'blockByUserName',
+						options: {
+							command: command.oscPath,
+							args: command.args,
+						},
+					}
+
+					sendActionCommand(self, sendToCommand)
+				}
+			},
+		},
+		favoriteByUserName: {
+			name: 'Favorite by User Name',
+			description: 'Favorite user(s) by User Name. For multiple users, separate names with a comma.',
+			options: [
+				{
+					type: 'textinput',
+					label: 'User Name',
+					id: 'userName',
+					default: '',
+					useVariables: true,
+				},
+			],
+			callback: async (action): Promise<void> => {
+				self.log('debug', `Action Favorite by User Name triggered`)
+				const command = createCommand('/userName/favorite')
+				const userName = await self.parseVariablesInString(action.options.userName as string)
+				if (userName.indexOf(',') !== -1) {
+					const userNames = userName.split(',')
+					for (const name of userNames) {
+						self.log('debug', `Favoriting user: ${name.trim()}`)
+						command.args = [] // Reset args for each user
+						command.args.push({ type: 's', value: name.trim() })
+
+						const sendToCommand = {
+							id: 'favoriteByUserName',
+							options: {
+								command: command.oscPath,
+								args: command.args,
+							},
+						}
+
+						sendActionCommand(self, sendToCommand)
+					}
+				} else {
+					self.log('debug', `Favoriting user: ${userName}`)
+					command.args.push({ type: 's', value: userName })
+
+					const sendToCommand = {
+						id: 'favoriteByUserName',
+						options: {
+							command: command.oscPath,
+							args: command.args,
+						},
+					}
+
+					sendActionCommand(self, sendToCommand)
+				}
+			},
+		},
+		replaceByUserName: {
+			name: 'Replace by User Name',
+			description: 'Replace user by User Name. Comma separated values: UserToReplace, NewUser',
+			options: [
+				{
+					type: 'textinput',
+					label: 'User Name(s). Comma separated values: UserToReplace, NewUser',
+					id: 'userName',
+					default: '',
+					useVariables: true,
+				},
+			],
+			callback: async (action): Promise<void> => {
+				self.log('debug', `Action Replace by User Name triggered`)
+				const command = createCommand('/userName/replaceByName')
+				const userName = await self.parseVariablesInString(action.options.userName as string)
+				const names = userName.split(',')
+				if (names.length !== 2) {
+					self.log('error', 'This action requires exactly two user names separated by a comma: UserToReplace, NewUser')
+				} else {
+					self.log('debug', `Replacing user: ${userName}`)
+					command.args.push({ type: 's', value: names[0].trim() })
+					command.args.push({ type: 's', value: names[1].trim() })
+
+					const sendToCommand = {
+						id: 'replaceByUserName',
+						options: {
+							command: command.oscPath,
+							args: command.args,
+						},
+					}
+
+					sendActionCommand(self, sendToCommand)
+				}
+			},
+		},
 	})
 }
