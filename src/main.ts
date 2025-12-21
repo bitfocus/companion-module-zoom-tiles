@@ -19,6 +19,7 @@ export class ZoomInstance extends InstanceBase<ZoomConfig> {
 	}
 
 	async init(config: ZoomConfig): Promise<void> {
+		this.log('debug', `init called with config: ${JSON.stringify(config)}`)
 		this.config = config
 		await this.configUpdated(config)
 
@@ -26,10 +27,12 @@ export class ZoomInstance extends InstanceBase<ZoomConfig> {
 	}
 	// When module gets deleted
 	async destroy(): Promise<void> {
+		if (this.OSC) this.OSC.destroy()
 		this.log('debug', 'destroy')
 	}
 
 	async configUpdated(config: ZoomConfig): Promise<void> {
+		this.log('debug', `configUpdated called with config: ${JSON.stringify(config)}`)
 		this.config = config
 		this.saveConfig(config)
 		this.log('info', 'Changing Config!')
