@@ -2,7 +2,7 @@ import { InstanceBase, runEntrypoint, InstanceStatus, SomeCompanionConfigField }
 import { GetConfigFields, type ZoomConfig } from './config.js'
 import { UpdateVariableDefinitions } from './variables.js'
 import { UpgradeScripts } from './upgrades.js'
-import { UpdateActions } from './actions.js'
+import { GetActions } from './actions.js'
 import { UpdateFeedbacks } from './feedbacks.js'
 import { OSC } from './osc.js'
 
@@ -48,7 +48,7 @@ export class ZoomInstance extends InstanceBase<ZoomConfig> {
 	}
 
 	updateActions(): void {
-		UpdateActions(this)
+		this.setActionDefinitions(GetActions(this))
 	}
 
 	updateFeedbacks(): void {

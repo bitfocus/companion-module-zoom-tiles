@@ -1,6 +1,6 @@
 import { CompanionActionEvent } from '@companion-module/base'
-import { ZoomConfig } from './config.js'
-import { InstanceBaseExt } from './utils.js'
+import { ZoomConfig } from '../../config.js'
+import { InstanceBaseExt } from '../../utils.js'
 
 /**
  * createUserCommand function to create oscPath and arguments for user

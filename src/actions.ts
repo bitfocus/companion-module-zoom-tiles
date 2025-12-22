@@ -1,439 +1,64 @@
-import type { ZoomInstance } from './main.js'
-import { options } from './utils.js'
-import { createCommand, sendActionCommand } from './action-utils.js'
+import { CompanionActionDefinition, CompanionActionDefinitions } from '@companion-module/base'
+import { InstanceBaseExt } from './utils.js'
+import { ZoomConfig } from './config.js'
+import { ActionIdBlock, GetActionsBlock } from './actions/action-block.js'
+import { ActionIdCapture, GetActionsCapture } from './actions/action-capture.js'
+import { ActionIdConfig, GetActionsConfig } from './actions/action-config.js'
+import { ActionIdFavorite, GetActionsFavorite } from './actions/action-favorite.js'
+import { ActionIdGalleryTimer, GetActionsGalleryTimer } from './actions/action-gallery-timer.js'
+import { ActionIdJoinLeave, GetActionsJoinLeave } from './actions/action-join-leave.js'
+import { ActionIdReplace, GetActionsReplace } from './actions/action-replace.js'
 
-export function UpdateActions(self: ZoomInstance): void {
-	self.setActionDefinitions({
-		startPMI: {
-			name: 'Start Personal Meeting ID',
-			options: [],
-			callback: (): void => {
-				self.log('debug', `Action Start Personal Meeting ID triggered`)
-				const command = createCommand('/startPMI')
+export enum ActionId {}
 
-				const sendToCommand = {
-					id: 'startPMI',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
+export function GetActions(instance: InstanceBaseExt<ZoomConfig>): CompanionActionDefinitions {
+	const actionsBlock: {
+		[id in ActionIdBlock]: CompanionActionDefinition | undefined
+	} = GetActionsBlock(instance)
 
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		startIM: {
-			name: 'Start Instant Meeting',
-			options: [],
-			callback: (): void => {
-				self.log('debug', `Action Start Instant Meeting triggered`)
-				const command = createCommand('/startIM')
+	const actionsCapture: {
+		[id in ActionIdCapture]: CompanionActionDefinition | undefined
+	} = GetActionsCapture(instance)
 
-				const sendToCommand = {
-					id: 'startIM',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
+	const actionsIdConfig: {
+		[id in ActionIdConfig]: CompanionActionDefinition | undefined
+	} = GetActionsConfig(instance)
 
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		joinMeeting: {
-			name: 'Join Meeting',
-			options: [options.meetingID, options.password, options.name],
-			callback: async (action): Promise<void> => {
-				self.log('debug', `Action Join Meeting triggered: ${JSON.stringify(action)}`)
-				const command = createCommand('/joinMeeting')
-				const name = await self.parseVariablesInString(action.options.name as string)
-				const meetingID = await self.parseVariablesInString(action.options.meetingID as string)
-				const password = await self.parseVariablesInString(action.options.password as string)
+	const actionsIdFavorite: {
+		[id in ActionIdFavorite]: CompanionActionDefinition | undefined
+	} = GetActionsFavorite(instance)
 
-				command.args.push({ type: 's', value: meetingID })
-				command.args.push({ type: 's', value: password })
-				command.args.push({ type: 's', value: name })
+	const actionsIdGalleryTimer: {
+		[id in ActionIdGalleryTimer]: CompanionActionDefinition | undefined
+	} = GetActionsGalleryTimer(instance)
 
-				const sendToCommand = {
-					id: 'joinMeeting',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
+	const actionsIdJoinLeave: {
+		[id in ActionIdJoinLeave]: CompanionActionDefinition | undefined
+	} = GetActionsJoinLeave(instance)
 
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		zakJoin: {
-			name: 'ZAK Join Meeting',
-			options: [options.zak, options.meetingID, options.password, options.name],
-			callback: async (action): Promise<void> => {
-				// type: 'Special'
-				const command = createCommand('/zakJoin')
-				const name = await self.parseVariablesInString(action.options.name as string)
-				const zak = await self.parseVariablesInString(action.options.zak as string)
-				const meetingId = await self.parseVariablesInString(action.options.meetingID as string)
-				const password = await self.parseVariablesInString(action.options.password as string)
-				command.args.push({ type: 's', value: zak })
-				command.args.push({ type: 's', value: meetingId })
-				command.args.push({ type: 's', value: name })
-				command.args.push({ type: 's', value: password })
-				const sendToCommand = {
-					id: 'zakJoin',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		leaveMeeting: {
-			name: 'Leave Meeting',
-			options: [],
-			callback: (): void => {
-				self.log('debug', `Action Leave Meeting triggered`)
-				const command = createCommand('/leaveMeeting')
+	const actionsIdReplace: {
+		[id in ActionIdReplace]: CompanionActionDefinition | undefined
+	} = GetActionsReplace(instance)
 
-				const sendToCommand = {
-					id: 'leaveMeeting',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
+	const actions: {
+		[id in
+			| ActionId
+			| ActionIdBlock
+			| ActionIdCapture
+			| ActionIdConfig
+			| ActionIdFavorite
+			| ActionIdGalleryTimer
+			| ActionIdJoinLeave
+			| ActionIdReplace]: CompanionActionDefinition | undefined
+	} = {
+		...actionsBlock,
+		...actionsCapture,
+		...actionsIdConfig,
+		...actionsIdFavorite,
+		...actionsIdGalleryTimer,
+		...actionsIdJoinLeave,
+		...actionsIdReplace,
+	}
 
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		startCaptureEngine: {
-			name: 'Start Capture Engine',
-			options: [],
-			callback: (): void => {
-				self.log('debug', `Action Start Capture Engine triggered`)
-				const command = createCommand('/startCaptureEngine')
-
-				const sendToCommand = {
-					id: 'startCaptureEngine',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
-
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		stopCaptureEngine: {
-			name: 'Stop Capture Engine',
-			options: [],
-			callback: (): void => {
-				self.log('debug', `Action Stop Capture Engine triggered`)
-				const command = createCommand('/stopCaptureEngine')
-
-				const sendToCommand = {
-					id: 'stopCaptureEngine',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
-
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		enableGallery: {
-			name: 'Enable Gallery',
-			options: [
-				{
-					type: 'number',
-					label: 'Gallery #',
-					id: 'galleryIndex',
-					min: 0,
-					max: 10,
-					default: 1,
-				},
-			],
-			callback: (action): void => {
-				self.log('debug', `Action Enable Gallery triggered`)
-				const command = createCommand('/enableGallery')
-
-				command.args.push({
-					type: 'i',
-					value: action.options.galleryIndex as number,
-				})
-				const sendToCommand = {
-					id: 'enableGallery',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
-
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		disableGallery: {
-			name: 'Disable Gallery',
-			options: [
-				{
-					type: 'number',
-					label: 'Gallery #',
-					id: 'galleryIndex',
-					min: 0,
-					max: 10,
-					default: 1,
-				},
-			],
-			callback: (action): void => {
-				self.log('debug', `Action Disable Gallery triggered`)
-				const command = createCommand('/disableGallery')
-
-				command.args.push({
-					type: 'i',
-					value: action.options.galleryIndex as number,
-				})
-				const sendToCommand = {
-					id: 'disableGallery',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
-
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		startQueueTimer: {
-			name: 'Start Queue Timer',
-			options: [],
-			callback: (): void => {
-				self.log('debug', `Action Start Queue Timer triggered`)
-				const command = createCommand('/startQueueTimer')
-				const sendToCommand = {
-					id: 'startQueueTimer',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
-
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		stopQueueTimer: {
-			name: 'Stop Queue Timer',
-			options: [],
-			callback: (): void => {
-				self.log('debug', `Action Stop Queue Timer triggered`)
-				const command = createCommand('/stopQueueTimer')
-				const sendToCommand = {
-					id: 'stopQueueTimer',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
-
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		activateHolePunch: {
-			name: 'Activate Hole Punch',
-			options: [
-				{
-					type: 'number',
-					label: 'Gallery #',
-					id: 'galleryIndex',
-					min: 0,
-					max: 10,
-					default: 1,
-				},
-			],
-			callback: (action): void => {
-				self.log('debug', `Action Activate Hole Punch triggered`)
-				const command = createCommand('/activateHolePunch')
-
-				command.args.push({
-					type: 'i',
-					value: action.options.galleryIndex as number,
-				})
-				const sendToCommand = {
-					id: 'activateHolePunch',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
-
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		deactivateHolePunch: {
-			name: 'Deactivate Hole Punch',
-			options: [
-				{
-					type: 'number',
-					label: 'Gallery #',
-					id: 'galleryIndex',
-					min: 0,
-					max: 10,
-					default: 1,
-				},
-			],
-			callback: (action): void => {
-				self.log('debug', `Action Deactivate Hole Punch triggered`)
-				const command = createCommand('/deactivateHolePunch')
-
-				command.args.push({
-					type: 'i',
-					value: action.options.galleryIndex as number,
-				})
-				const sendToCommand = {
-					id: 'deactivateHolePunch',
-					options: {
-						command: command.oscPath,
-						args: command.args,
-					},
-				}
-
-				sendActionCommand(self, sendToCommand)
-			},
-		},
-		blockByUserName: {
-			name: 'Block by User Name',
-			description: 'Block user(s) by User Name. For multiple users, separate names with a comma.',
-			options: [
-				{
-					type: 'textinput',
-					label: 'User Name',
-					id: 'userName',
-					default: '',
-					useVariables: true,
-				},
-			],
-			callback: async (action): Promise<void> => {
-				self.log('debug', `Action Block by User Name triggered`)
-				const command = createCommand('/userName/block')
-				const userName = await self.parseVariablesInString(action.options.userName as string)
-				if (userName.indexOf(',') !== -1) {
-					const userNames = userName.split(',')
-					for (const name of userNames) {
-						self.log('debug', `Blocking user: ${name.trim()}`)
-						command.args = [] // Reset args for each user
-						command.args.push({ type: 's', value: name.trim() })
-
-						const sendToCommand = {
-							id: 'blockByUserName',
-							options: {
-								command: command.oscPath,
-								args: command.args,
-							},
-						}
-
-						sendActionCommand(self, sendToCommand)
-					}
-				} else {
-					self.log('debug', `Blocking user: ${userName}`)
-					command.args.push({ type: 's', value: userName })
-
-					const sendToCommand = {
-						id: 'blockByUserName',
-						options: {
-							command: command.oscPath,
-							args: command.args,
-						},
-					}
-
-					sendActionCommand(self, sendToCommand)
-				}
-			},
-		},
-		favoriteByUserName: {
-			name: 'Favorite by User Name',
-			description: 'Favorite user(s) by User Name. For multiple users, separate names with a comma.',
-			options: [
-				{
-					type: 'textinput',
-					label: 'User Name',
-					id: 'userName',
-					default: '',
-					useVariables: true,
-				},
-			],
-			callback: async (action): Promise<void> => {
-				self.log('debug', `Action Favorite by User Name triggered`)
-				const command = createCommand('/userName/favorite')
-				const userName = await self.parseVariablesInString(action.options.userName as string)
-				if (userName.indexOf(',') !== -1) {
-					const userNames = userName.split(',')
-					for (const name of userNames) {
-						self.log('debug', `Favoriting user: ${name.trim()}`)
-						command.args = [] // Reset args for each user
-						command.args.push({ type: 's', value: name.trim() })
-
-						const sendToCommand = {
-							id: 'favoriteByUserName',
-							options: {
-								command: command.oscPath,
-								args: command.args,
-							},
-						}
-
-						sendActionCommand(self, sendToCommand)
-					}
-				} else {
-					self.log('debug', `Favoriting user: ${userName}`)
-					command.args.push({ type: 's', value: userName })
-
-					const sendToCommand = {
-						id: 'favoriteByUserName',
-						options: {
-							command: command.oscPath,
-							args: command.args,
-						},
-					}
-
-					sendActionCommand(self, sendToCommand)
-				}
-			},
-		},
-		replaceByUserName: {
-			name: 'Replace by User Name',
-			description: 'Replace user by User Name. Comma separated values: UserToReplace, NewUser',
-			options: [
-				{
-					type: 'textinput',
-					label: 'User Name(s). Comma separated values: UserToReplace, NewUser',
-					id: 'userName',
-					default: '',
-					useVariables: true,
-				},
-			],
-			callback: async (action): Promise<void> => {
-				self.log('debug', `Action Replace by User Name triggered`)
-				const command = createCommand('/userName/replaceByName')
-				const userName = await self.parseVariablesInString(action.options.userName as string)
-				const names = userName.split(',')
-				if (names.length !== 2) {
-					self.log('error', 'This action requires exactly two user names separated by a comma: UserToReplace, NewUser')
-				} else {
-					self.log('debug', `Replacing user: ${userName}`)
-					command.args.push({ type: 's', value: names[0].trim() })
-					command.args.push({ type: 's', value: names[1].trim() })
-
-					const sendToCommand = {
-						id: 'replaceByUserName',
-						options: {
-							command: command.oscPath,
-							args: command.args,
-						},
-					}
-
-					sendActionCommand(self, sendToCommand)
-				}
-			},
-		},
-	})
+	return actions
 }
