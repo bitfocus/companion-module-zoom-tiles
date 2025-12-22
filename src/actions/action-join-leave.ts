@@ -35,6 +35,7 @@ export function GetActionsJoinLeave(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdJoinLeave.startInstantMeeting]: {
 			name: 'Start Instant Meeting',
+			description: 'Start an instant meeting',
 			options: [],
 			callback: (): void => {
 				const command = createCommand('/startIM')
@@ -52,6 +53,7 @@ export function GetActionsJoinLeave(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdJoinLeave.joinMeeting]: {
 			name: 'Join Meeting',
+			description: 'Join a meeting with Meeting ID, Password, and Display Name',
 			options: [options.meetingID, options.password, options.name],
 			callback: async (action): Promise<void> => {
 				const command = createCommand('/joinMeeting')
@@ -76,6 +78,7 @@ export function GetActionsJoinLeave(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdJoinLeave.zakJoin]: {
 			name: 'ZAK Join Meeting',
+			description: 'Join a meeting using ZAK token, Meeting ID, Password, and Display Name',
 			options: [options.zak, options.meetingID, options.password, options.name],
 			callback: async (action): Promise<void> => {
 				// type: 'Special'
@@ -100,6 +103,7 @@ export function GetActionsJoinLeave(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdJoinLeave.leaveMeeting]: {
 			name: 'Leave Meeting',
+			description: 'Leave the current meeting',
 			options: [],
 			callback: (): void => {
 				const command = createCommand('/leaveMeeting')

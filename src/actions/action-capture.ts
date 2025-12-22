@@ -14,6 +14,7 @@ export function GetActionsCapture(instance: InstanceBaseExt<ZoomConfig>): {
 	const actions: { [id in ActionIdCapture]: CompanionActionDefinition | undefined } = {
 		[ActionIdCapture.startCaptureEngine]: {
 			name: 'Start Capture Engine',
+			description: 'Start the capture engine to begin capturing video tiles.',
 			options: [],
 			callback: (): void => {
 				const command = createCommand('/startCaptureEngine')
@@ -31,6 +32,7 @@ export function GetActionsCapture(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdCapture.stopCaptureEngine]: {
 			name: 'Stop Capture Engine',
+			description: 'Stop the capture engine to end capturing video tiles.',
 			options: [],
 			callback: (): void => {
 				const command = createCommand('/stopCaptureEngine')

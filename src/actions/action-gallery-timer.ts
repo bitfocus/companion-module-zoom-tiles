@@ -18,6 +18,7 @@ export function GetActionsGalleryTimer(instance: InstanceBaseExt<ZoomConfig>): {
 	const actions: { [id in ActionIdGalleryTimer]: CompanionActionDefinition | undefined } = {
 		[ActionIdGalleryTimer.enableGallery]: {
 			name: 'Enable Gallery',
+			description: 'Enable a specific gallery view.',
 			options: [
 				{
 					type: 'number',
@@ -48,6 +49,7 @@ export function GetActionsGalleryTimer(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdGalleryTimer.disableGallery]: {
 			name: 'Disable Gallery',
+			description: 'Disable a specific gallery view.',
 			options: [
 				{
 					type: 'number',
@@ -78,6 +80,7 @@ export function GetActionsGalleryTimer(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdGalleryTimer.startQueueTimer]: {
 			name: 'Start Queue Timer',
+			description: 'Start the queue timer for gallery updates.',
 			options: [],
 			callback: (): void => {
 				const command = createCommand('/startQueueTimer')
@@ -94,6 +97,7 @@ export function GetActionsGalleryTimer(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdGalleryTimer.stopQueueTimer]: {
 			name: 'Stop Queue Timer',
+			description: 'Stop the queue timer for gallery updates.',
 			options: [],
 			callback: (): void => {
 				const command = createCommand('/stopQueueTimer')
@@ -110,6 +114,7 @@ export function GetActionsGalleryTimer(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdGalleryTimer.activateHolePunch]: {
 			name: 'Activate Hole Punch',
+			description: 'Activate hole punch for a specific gallery view.',
 			options: [
 				{
 					type: 'number',
@@ -140,6 +145,7 @@ export function GetActionsGalleryTimer(instance: InstanceBaseExt<ZoomConfig>): {
 		},
 		[ActionIdGalleryTimer.deactivateHolePunch]: {
 			name: 'Deactivate Hole Punch',
+			description: 'Deactivate Hole Punch for a specific gallery view.',
 			options: [
 				{
 					type: 'number',

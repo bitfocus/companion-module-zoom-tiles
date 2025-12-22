@@ -5,7 +5,7 @@ import { join, dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const actionsDir = join(__dirname, '../src');
+const actionsDir = join(__dirname, '../src/actions');
 const helpFile = join(__dirname, '../companion/HELP.md');
 console.log('Scanning directory:', actionsDir);
 console.log('Output file:', helpFile);
@@ -46,7 +46,7 @@ fs.readdirSync(actionsDir).forEach(file => {
 });
 
 const categoryLookup = {
-  'actions.ts': 'Actions',
+  'action-block.ts': 'Actions',
 };
 
 // Add category to each action
