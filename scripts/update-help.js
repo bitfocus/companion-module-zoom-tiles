@@ -1,14 +1,11 @@
 /* eslint-disable */
-import fs, { cp } from 'fs';
-import { fileURLToPath } from 'url';
-import { join, dirname } from 'path';
+const fs = require('fs');
+const path = require('path');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const actionsDir = join(__dirname, '../src/actions');
-const helpFile = join(__dirname, '../companion/HELP.md');
-console.log('Scanning directory:', actionsDir);
-console.log('Output file:', helpFile);
+const actionsDir = path.join(__dirname, '../src/actions');
+const helpFile = path.join(__dirname, '../companion/HELP.md');
+
+console.log('\n🔍 Scanning for actions...\n');
 
 function extractActions(fileContent, fileName) {
   const results = [];
@@ -16,7 +13,6 @@ function extractActions(fileContent, fileName) {
   let name = null;
   let description = null;
   for (const line of lines) {
-	// console.log('Processing line:', line);
     const nameMatch = line.match(/name\s*:\s*['"]([^'"]+)['"]/);
     if (nameMatch) {
       name = nameMatch[1];
@@ -27,7 +23,6 @@ function extractActions(fileContent, fileName) {
     }
     if (name && description) {
       results.push({ name, description, category: fileName });
-      console.log(`Found action in ${fileName}: name='${name}', description='${description}'`);
       name = null;
       description = null;
     }
@@ -37,21 +32,34 @@ function extractActions(fileContent, fileName) {
 
 const allActions = [];
 fs.readdirSync(actionsDir).forEach(file => {
-	console.log('Processing file:', file);
   if (file.endsWith('.ts')) {
-    console.log('Reading file:', file);
-    const content = fs.readFileSync(join(actionsDir, file), 'utf8');
-    allActions.push(...extractActions(content, file));
+    const content = fs.readFileSync(path.join(actionsDir, file), 'utf8');
+    const actions = extractActions(content, file);
+    allActions.push(...actions);
   }
 });
 
-const categoryLookup = {
-  'action-block.ts': 'Actions',
-};
+const categoryLookup = {};
+
+function formatCategoryName(fileName) {
+  // Remove .ts extension
+  let category = fileName.replace('.ts', '');
+  
+  // Strip out 'action-' prefix if it exists
+  if (category.startsWith('action-')) {
+    category = category.substring(7); // Remove 'action-'
+  }
+  
+  // Replace dashes with spaces and capitalize first letter of each word
+  return category
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
 
 // Add category to each action
 allActions.forEach(action => {
-  action.category = categoryLookup[action.category] || action.category.replace('.ts', '');
+  action.category = categoryLookup[action.category] || formatCategoryName(action.category);
 });
 
 // Sort actions by category then name
@@ -86,5 +94,25 @@ if (headerIndex !== -1) {
   helpContent += '\n\n' + supportedActionsHeader + '\n\n' + table + '\n';
 }
 
-// console.log(`Writing ${allActions.length} actions to`, helpFile);
 fs.writeFileSync(helpFile, helpContent);
+
+// Display summary
+console.log('📊 Actions Summary by Category:\n');
+const categoryCounts = {};
+sortedActions.forEach(action => {
+  if (!categoryCounts[action.category]) {
+    categoryCounts[action.category] = [];
+  }
+  categoryCounts[action.category].push(action.name);
+});
+
+Object.keys(categoryCounts).sort().forEach(category => {
+  console.log(`\x1b[36m${category}\x1b[0m (${categoryCounts[category].length} actions)`);
+  categoryCounts[category].forEach(name => {
+    console.log(`  • ${name}`);
+  });
+  console.log('');
+});
+
+console.log(`\x1b[32m✅ Successfully updated ${helpFile}\x1b[0m`);
+console.log(`\x1b[32m✅ Total actions added: ${allActions.length}\x1b[0m\n`);
