@@ -1,4 +1,4 @@
-## Zoom Tiles
+# Zoom Tiles
 
 ## Configuration
 
@@ -26,27 +26,80 @@ Actions that require a **userName** parameter support Companion variables. This 
 
 ## Supported Actions and Feedbacks
 
-| Category | Name | Description |
-|----------|------|-------------|
-| Block | Block by Index | Block a tile using the gallery index and tile index. |
-| Block | Block by User Name | Block user(s) by User Name. For multiple users, separate names with a comma. |
-| Capture | Start Capture Engine | Start the capture engine to begin capturing video tiles. |
-| Capture | Stop Capture Engine | Stop the capture engine to end capturing video tiles. |
-| Config | Load Configuration | Load a configuration file from an absolute path on disk. |
-| Favorite | Favorite by Index | Favorite a tile using the gallery index and tile index. |
-| Favorite | Favorite by User Name | Favorite user(s) by User Name. For multiple users, separate names with a comma. |
-| Gallery Timer | Activate Hole Punch | Activate hole punch for a specific gallery view. |
-| Gallery Timer | Deactivate Hole Punch | Deactivate Hole Punch for a specific gallery view. |
-| Gallery Timer | Disable Gallery | Disable a specific gallery view. |
-| Gallery Timer | Enable Gallery | Enable a specific gallery view. |
-| Gallery Timer | Start Queue Timer | Start the queue timer for gallery updates. |
-| Gallery Timer | Stop Queue Timer | Stop the queue timer for gallery updates. |
-| Join Leave | Join Meeting | Join a meeting with Meeting ID, Password, and Display Name |
-| Join Leave | Leave Meeting | Leave the current meeting |
-| Join Leave | Start Instant Meeting | Start an instant meeting |
-| Join Leave | Start Personal Meeting ID | Start a meeting using your Personal Meeting ID |
-| Join Leave | ZAK Join Meeting | Join a meeting using ZAK token, Meeting ID, Password, and Display Name |
-| Replace | Replace by User Name | Replace user in the gallery with a new user regardless of where they are in the gallery. |
-| Replace | Replace Tile Index with Tile Index | Replace a Tile Index with another Tile Index. |
-| Replace | Replace User with Tile Index | Replace a user with a specific gallery/tile index. |
+### Block
 
+Block actions prevent specific participants from appearing in your gallery views.
+You can block by user name or by their position in a specific gallery.
+
+| Name | Description |
+| --- | --- |
+| Block by Index | Block a tile using the gallery index and tile index. |
+| Block by User Name | Block user(s) by User Name. For multiple users, separate names with a comma. |
+
+### Capture
+
+Capture actions control the Zoom Tiles capture engine.
+Start capturing to begin recording video tiles, stop to end the capture session.
+
+| Name | Description |
+| --- | --- |
+| Start Capture Engine | Start the capture engine to begin capturing video tiles. |
+| Stop Capture Engine | Stop the capture engine to end capturing video tiles. |
+
+### Config
+
+Load a Zoom Tiles configuration file to quickly apply saved settings.
+Configuration files must be stored with an absolute path on the system running Zoom Tiles.
+
+| Name | Description |
+| --- | --- |
+| Load Configuration | Load a configuration file from an absolute path on disk. |
+
+### Favorite
+
+Favorite actions mark participants to ensure they remain visible in your gallery views.
+You can favorite by user name or by their position in a specific gallery.
+
+| Name | Description |
+| --- | --- |
+| Favorite by Index | Favorite a tile using the gallery index and tile index. |
+| Favorite by User Name | Favorite user(s) by User Name. For multiple users, separate names with a comma. |
+
+### Gallery Timer
+
+Gallery Timer actions control gallery view rotation and visibility.
+Use queue timers to automatically cycle through participants, enable/disable specific galleries, and activate hole punch for transparency effects.
+
+| Name | Description |
+| --- | --- |
+| Activate Hole Punch | Activate hole punch for a specific gallery view. |
+| Deactivate Hole Punch | Deactivate Hole Punch for a specific gallery view. |
+| Disable Gallery | Disable a specific gallery view. |
+| Enable Gallery | Enable a specific gallery view. |
+| Start Queue Timer | Start the queue timer for gallery updates. |
+| Stop Queue Timer | Stop the queue timer for gallery updates. |
+
+### Join Leave
+
+Join and leave Zoom meetings directly from Companion.
+Start your personal meeting, create an instant meeting, join with Meeting ID/Password, or use ZAK tokens for authenticated joins.
+
+| Name | Description |
+| --- | --- |
+| Join Meeting | Join a meeting with Meeting ID, Password, and Display Name |
+| Leave Meeting | Leave the current meeting |
+| Start Instant Meeting | Start an instant meeting |
+| Start Personal Meeting ID | Start a meeting using your Personal Meeting ID |
+| ZAK Join Meeting | Join a meeting using ZAK token, Meeting ID, Password, and Display Name |
+
+### Replace
+
+Replace actions allow you to swap participants in gallery views.
+You can replace by user name, tile index, or a combination of both.
+
+| Name | Description |
+| --- | --- |
+| Replace by User Name | Replace user in the gallery with a new user regardless of where they are in the gallery. |
+| Replace Tile Index in a Gallery with a New User | Replace a Tile Index with a specific User. If both users are already in the gallery then they swap places in the gallery |
+| Replace Tile Index with Tile Index | Replace a Tile Index with another Tile Index. |
+| Replace User with Tile Index | Replace a user with a specific gallery/tile index. |

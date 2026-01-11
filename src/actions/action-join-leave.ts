@@ -11,6 +11,11 @@ export enum ActionIdJoinLeave {
 	leaveMeeting = 'leaveMeeting',
 }
 
+/**
+ * @help-description
+ * Join and leave Zoom meetings directly from Companion.
+ * Start your personal meeting, create an instant meeting, join with Meeting ID/Password, or use ZAK tokens for authenticated joins.
+ */
 export function GetActionsJoinLeave(instance: InstanceBaseExt<ZoomConfig>): {
 	[id in ActionIdJoinLeave]: CompanionActionDefinition | undefined
 } {

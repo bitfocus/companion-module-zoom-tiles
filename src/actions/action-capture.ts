@@ -8,6 +8,11 @@ export enum ActionIdCapture {
 	stopCaptureEngine = 'stopCaptureEngine',
 }
 
+/**
+ * @help-description
+ * Capture actions control the Zoom Tiles capture engine.
+ * Start capturing to begin recording video tiles, stop to end the capture session.
+ */
 export function GetActionsCapture(instance: InstanceBaseExt<ZoomConfig>): {
 	[id in ActionIdCapture]: CompanionActionDefinition | undefined
 } {

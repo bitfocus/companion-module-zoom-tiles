@@ -7,6 +7,11 @@ export enum ActionIdConfig {
 	loadConfiguration = 'loadConfiguration',
 }
 
+/**
+ * @help-description
+ * Load a Zoom Tiles configuration file to quickly apply saved settings.
+ * Configuration files must be stored with an absolute path on the system running Zoom Tiles.
+ */
 export function GetActionsConfig(instance: InstanceBaseExt<ZoomConfig>): {
 	[id in ActionIdConfig]: CompanionActionDefinition | undefined
 } {

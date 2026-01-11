@@ -10,6 +10,11 @@ export enum ActionIdReplace {
 	replaceUserWithNewUser = 'replaceUserWithNewUser',
 }
 
+/**
+ * @help-description
+ * Replace actions allow you to swap participants in gallery views.
+ * You can replace by user name, tile index, or a combination of both.
+ */
 export function GetActionsReplace(instance: InstanceBaseExt<ZoomConfig>): {
 	[id in ActionIdReplace]: CompanionActionDefinition | undefined
 } {

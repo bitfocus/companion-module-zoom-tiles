@@ -8,6 +8,11 @@ export enum ActionIdFavorite {
 	favoriteByIndex = 'favoriteByIndex',
 }
 
+/**
+ * @help-description
+ * Favorite actions mark participants to ensure they remain visible in your gallery views.
+ * You can favorite by user name or by their position in a specific gallery.
+ */
 export function GetActionsFavorite(instance: InstanceBaseExt<ZoomConfig>): {
 	[id in ActionIdFavorite]: CompanionActionDefinition | undefined
 } {

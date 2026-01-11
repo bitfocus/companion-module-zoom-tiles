@@ -12,6 +12,11 @@ export enum ActionIdGalleryTimer {
 	deactivateHolePunch = 'deactivateHolePunch',
 }
 
+/**
+ * @help-description
+ * Gallery Timer actions control gallery view rotation and visibility.
+ * Use queue timers to automatically cycle through participants, enable/disable specific galleries, and activate hole punch for transparency effects.
+ */
 export function GetActionsGalleryTimer(instance: InstanceBaseExt<ZoomConfig>): {
 	[id in ActionIdGalleryTimer]: CompanionActionDefinition | undefined
 } {

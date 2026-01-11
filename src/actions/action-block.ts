@@ -8,6 +8,11 @@ export enum ActionIdBlock {
 	blockByUserName = 'blockByUserName',
 }
 
+/**
+ * @help-description
+ * Block actions prevent specific participants from appearing in your gallery views.
+ * You can block by user name or by their position in a specific gallery.
+ */
 export function GetActionsBlock(instance: InstanceBaseExt<ZoomConfig>): {
 	[id in ActionIdBlock]: CompanionActionDefinition | undefined
 } {
