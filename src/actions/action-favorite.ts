@@ -6,12 +6,15 @@ import { ZoomConfig } from '../config.js'
 export enum ActionIdFavorite {
 	favoriteByUserName = 'favoriteByUserName',
 	favoriteByIndex = 'favoriteByIndex',
+	unFavoriteByUserName = 'unFavoriteByUserName',
+	unFavoriteByIndex = 'unFavoriteByIndex',
 }
 
 /**
  * @help-description
  * Favorite actions mark participants to ensure they remain visible in your gallery views.
- * You can favorite by user name or by their position in a specific gallery.
+ * UnFavorite actions remove the favorite marking from participants.
+ * You can favorite/unfavorite by user name or by their position in a specific gallery.
  */
 export function GetActionsFavorite(instance: InstanceBaseExt<ZoomConfig>): {
 	[id in ActionIdFavorite]: CompanionActionDefinition | undefined
@@ -103,6 +106,101 @@ export function GetActionsFavorite(instance: InstanceBaseExt<ZoomConfig>): {
 
 				const sendToCommand = {
 					id: 'favoriteByIndex',
+					options: {
+						command: command.oscPath,
+						args: command.args,
+					},
+				}
+
+				sendActionCommand(instance, sendToCommand)
+			},
+		},
+		[ActionIdFavorite.unFavoriteByUserName]: {
+			name: 'UnFavorite by User Name',
+			description: 'UnFavorite user(s) by User Name. For multiple users, separate names with a comma.',
+			options: [
+				{
+					type: 'textinput',
+					label: 'User Name',
+					id: 'userName',
+					default: '',
+					useVariables: true,
+				},
+			],
+			callback: async (action): Promise<void> => {
+				const command = createCommand('/userName/unFavorite')
+				const userName = await instance.parseVariablesInString(action.options.userName as string)
+				if (userName.indexOf(',') !== -1) {
+					const userNames = userName.split(',')
+					for (const name of userNames) {
+						command.args = []
+						command.args.push({ type: 's', value: name.trim() })
+
+						const sendToCommand = {
+							id: 'unFavoriteByUserName',
+							options: {
+								command: command.oscPath,
+								args: command.args,
+							},
+						}
+
+						sendActionCommand(instance, sendToCommand)
+					}
+				} else {
+					command.args.push({ type: 's', value: userName })
+
+					const sendToCommand = {
+						id: 'unFavoriteByUserName',
+						options: {
+							command: command.oscPath,
+							args: command.args,
+						},
+					}
+
+					sendActionCommand(instance, sendToCommand)
+				}
+			},
+		},
+		[ActionIdFavorite.unFavoriteByIndex]: {
+			name: 'UnFavorite by Index',
+			description: 'UnFavorite a tile using the gallery index and tile index.',
+			options: [
+				{
+					type: 'textinput',
+					label: 'Gallery Index',
+					id: 'galleryIndex',
+					default: '1',
+					useVariables: true,
+				},
+				{
+					type: 'textinput',
+					label: 'Tile Index',
+					id: 'tileIndex',
+					default: '1',
+					useVariables: true,
+				},
+			],
+			callback: async (action): Promise<void> => {
+				const command = createCommand('/tileIndex/unFavorite')
+
+				const galleryIndexRaw = await instance.parseVariablesInString(String(action.options.galleryIndex ?? ''))
+				const tileIndexRaw = await instance.parseVariablesInString(String(action.options.tileIndex ?? ''))
+				const galleryIndex = Number.parseInt(galleryIndexRaw, 10)
+				const tileIndex = Number.parseInt(tileIndexRaw, 10)
+
+				if (!Number.isInteger(galleryIndex) || !Number.isInteger(tileIndex)) {
+					instance.log(
+						'error',
+						`UnFavorite by Index requires integer values. Received gallery='${galleryIndexRaw}', tile='${tileIndexRaw}'`,
+					)
+					return
+				}
+
+				command.args.push({ type: 'i', value: galleryIndex })
+				command.args.push({ type: 'i', value: tileIndex })
+
+				const sendToCommand = {
+					id: 'unFavoriteByIndex',
 					options: {
 						command: command.oscPath,
 						args: command.args,

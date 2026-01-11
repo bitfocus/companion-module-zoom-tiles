@@ -29,12 +29,15 @@ Actions that require a **userName** parameter support Companion variables. This 
 ### Block
 
 Block actions prevent specific participants from appearing in your gallery views.
-You can block by user name or by their position in a specific gallery.
+UnBlock actions allow previously blocked participants to appear again.
+You can block/unblock by user name or by their position in a specific gallery.
 
 | Name | Description |
 | --- | --- |
 | Block by Index | Block a tile using the gallery index and tile index. |
 | Block by User Name | Block user(s) by User Name. For multiple users, separate names with a comma. |
+| UnBlock by Index | (does not currently work)UnBlock a tile using the gallery index and tile index. |
+| UnBlock by User Name | UnBlock user(s) by User Name. For multiple users, separate names with a comma. |
 
 ### Capture
 
@@ -58,12 +61,15 @@ Configuration files must be stored with an absolute path on the system running Z
 ### Favorite
 
 Favorite actions mark participants to ensure they remain visible in your gallery views.
-You can favorite by user name or by their position in a specific gallery.
+UnFavorite actions remove the favorite marking from participants.
+You can favorite/unfavorite by user name or by their position in a specific gallery.
 
 | Name | Description |
 | --- | --- |
 | Favorite by Index | Favorite a tile using the gallery index and tile index. |
 | Favorite by User Name | Favorite user(s) by User Name. For multiple users, separate names with a comma. |
+| UnFavorite by Index | UnFavorite a tile using the gallery index and tile index. |
+| UnFavorite by User Name | UnFavorite user(s) by User Name. For multiple users, separate names with a comma. |
 
 ### Gallery Timer
 
