@@ -36,7 +36,6 @@ You can block/unblock by user name or by their position in a specific gallery.
 | --- | --- |
 | Block by Index | Block a tile using the gallery index and tile index. |
 | Block by User Name | Block user(s) by User Name. For multiple users, separate names with a comma. |
-| UnBlock by Index | (does not currently work)UnBlock a tile using the gallery index and tile index. |
 | UnBlock by User Name | UnBlock user(s) by User Name. For multiple users, separate names with a comma. |
 
 ### Capture
