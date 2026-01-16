@@ -15,7 +15,7 @@ export class OSC {
 	private readonly instance: InstanceBaseExt<ZoomConfig>
 	private oscHost = ''
 	private oscTxPort = 1234
-	private oscRxPort = 0
+	// private oscRxPort = 0
 	private udpPort: any
 
 	constructor(instance: InstanceBaseExt<ZoomConfig>) {
@@ -39,11 +39,11 @@ export class OSC {
 	 * @description Create a OSC connection to Zoom
 	 */
 	public readonly Connect = (): void => {
-		this.instance.log('debug', 'Connecting to Zoom Tiles...')
-		this.instance.log('info', `Configuring Zoom Tiles connection to ${JSON.stringify(this.instance.config)}`)
+		this.instance.log('info', 'Connecting to Zoom Tiles...')
+		// this.instance.log('info', `Configuring Zoom Tiles connection to ${JSON.stringify(this.instance.config)}`)
 		this.oscHost = this.instance.config.host || '127.0.0.1'
 		this.oscTxPort = this.instance.config.rx_port || 3456
-		this.oscRxPort = 0 // No receive port currently used by Zoom Tiles
+		// this.oscRxPort = 0 // No receive port currently used by Zoom Tiles
 
 		this.instance.updateStatus(InstanceStatus.Connecting)
 		this.udpPort = new osc.UDPPort({
@@ -69,8 +69,8 @@ export class OSC {
 
 		// When the port is ready
 		this.udpPort.on('ready', () => {
-			this.instance.log('info', `Listening to Zoom Tiles on port: ${this.oscRxPort}`)
-			this.instance.updateStatus(InstanceStatus.Connecting, 'Listening for first response')
+			// this.instance.log('info', `Listening to Zoom Tiles on port: ${this.oscRxPort}`)
+			// this.instance.updateStatus(InstanceStatus.Connecting, 'Listening for first response')
 		})
 
 		// Open the socket.
@@ -93,7 +93,7 @@ export class OSC {
 	 * @description Check OSC connection status and format command to send to Zoom
 	 */
 	public readonly sendCommand = (path: string, args?: OSCSomeArguments): void => {
-		this.instance.log('debug', `sending ${JSON.stringify(path)} ${args ? JSON.stringify(args) : ''}`)
+		// this.instance.log('debug', `sending ${JSON.stringify(path)} ${args ? JSON.stringify(args) : ''}`)
 		try {
 			this.udpPort.send(
 				{
