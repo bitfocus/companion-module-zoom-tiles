@@ -1,8 +1,8 @@
 {
-	"id": "companion-module-zoom-tiles",
-	"name": "companion-module-zoom-tiles",
-	"shortname": "zoom-tiles",
-	"description": "Zoom Tiles plugin for companion",
+	"id": "zoom-tiles",
+	"name": "zoom-tiles",
+	"shortname": "Zoom Tiles",
+	"description": Control Zoom Tikes using OSC commands",
 	"version": "0.0.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-zoom-tiles.git",
@@ -22,5 +22,5 @@
 	"legacyIds": [],
 	"manufacturer": "Zoom",
 	"products": ["Tiles"],
-	"keywords": ["zoom", "tiles", "ZoomTiles", "zoom tiles"]
+	"keywords": ["ZoomTiles"]
 }
