@@ -2,7 +2,7 @@
 	"id": "zoom-tiles",
 	"name": "zoom-tiles",
 	"shortname": "Zoom Tiles",
-	"description": Control Zoom Tikes using OSC commands",
+	"description": Control Zoom Tiles using OSC commands",
 	"version": "0.0.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-zoom-tiles.git",
